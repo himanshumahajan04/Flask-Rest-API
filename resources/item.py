@@ -38,7 +38,22 @@ class Item(MethodView):
         try:
             return items[item_id]
         except KeyError:
-            return {"message": "Item not found"}, 404
+ITEM_NOT_FOUND_MESSAGE = "Item not found"
+
+def get_item(item_id):
+    if item_id not in items:
+        return {"error": ITEM_NOT_FOUND_MESSAGE}, 404
+    # Other logic...
+
+def delete_item(item_id):
+    if item_id not in items:
+        return {"error": ITEM_NOT_FOUND_MESSAGE}, 404
+    # Other logic...
+
+def update_item(item_id, data):
+    if item_id not in items:
+        return {"error": ITEM_NOT_FOUND_MESSAGE}, 404
+    # Other logic...
 
 
     def delete(self, item_id):
