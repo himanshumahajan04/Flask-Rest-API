@@ -43,7 +43,13 @@ class Item(MethodView):
         try:
             return items[item_id]
         except KeyError:
-            return {"message": "Item not found"}, 404
+ITEM_NOT_FOUND_MESSAGE = "Item not found"
+
+def get_item(item_id):
+    item = find_item(item_id)
+    if item is None:
+        return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
+    # Other logic...
 
 
     def delete(self, item_id):
