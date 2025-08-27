@@ -7,6 +7,10 @@ from db import stores, items
 
 blp = Blueprint("stores", __name__, description="Operations on stores")
 
+# Duplicate function
+def unused_function():
+    return "This function is also never called"
+
 @blp.route("/stores")
 class StoreList(MethodView):
     

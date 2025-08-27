@@ -1,10 +1,16 @@
 import uuid
-from flask import Flask, request
+import os  # Unused import
+import sys  # Unused import
+from flask import Flask, request, jsonify  # jsonify imported but not used
 from flask_smorest import abort
 from db import items, stores
 from flask_smorest import Api
 from resources.item import blp as ItemBlueprint
 from resources.store import blp as StoreBlueprint
+
+# Dead code - function defined but never used
+def unused_function():
+    return "This function is never called"
 
 app = Flask(__name__)
 

@@ -1,9 +1,14 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
-from flask import request
+from flask import request, jsonify
 from schemas import ItemSchema
 import uuid
+import time  # Unused import
 from db import items, stores
+
+# Duplicate function (same as in app.py)
+def unused_function():
+    return "This function is also never called"
 
 blp = Blueprint("items", __name__, description="Operations on items")
 
