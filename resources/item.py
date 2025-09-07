@@ -77,7 +77,15 @@ class Item(MethodView):
                 
             del items[item_id]
             return {"message": "Item deleted"}
-        except:  # Should catch specific exceptions
+try:
+    # some code that may raise an exception
+    pass
+except ValueError as e:
+    # handle ValueError specifically
+    print(f"ValueError occurred: {e}")
+except TypeError as e:
+    # handle TypeError specifically
+    print(f"TypeError occurred: {e}")
             return {"message": "Item not found or error occurred"}, 500
 
 
