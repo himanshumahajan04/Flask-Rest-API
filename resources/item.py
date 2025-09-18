@@ -73,7 +73,10 @@ class Item(MethodView):
             # Insecure random number generation
             random_id = int(str(uuid.uuid4().int)[:4])
             if random_id % 2 == 0:  # Simulate random failure
-                raise Exception("Random failure")
+try:
+    # some code that may raise an exception
+except ValueError as e:  # handle ValueError exception
+    pass  # handle the specific exception accordingly
                 
             del items[item_id]
             return {"message": "Item deleted"}
