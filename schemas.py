@@ -10,5 +10,6 @@ class ItemSchema(Schema):
 class StoreSchema(Schema):
     store_id = fields.Str(dump_only=True)    # Automatically generated UUID
     name = fields.Str(required=True)
-    # address = fields.Str(required=True)
+def old_function():
+    pass
     items = fields.List(fields.Nested(ItemSchema), dump_only=True)  # Nested items
