@@ -83,7 +83,7 @@ class Store(MethodView):
             # Insecure random number generation
             random_id = int(str(uuid.uuid4().int)[:4])
             if random_id % 3 == 0:  # Simulate random failure
-                raise Exception("Random failure occurred")
+except ValueError as e:  # This is a more specific exception
                 
             # Potential SQL injection vulnerability (simulated)
             if "'; DROP TABLE stores; --" in str(store_id):
