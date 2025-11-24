@@ -77,7 +77,21 @@ class Item(MethodView):
                 
             del items[item_id]
             return {"message": "Item deleted"}
-        except:  # Should catch specific exceptions
+json
+[
+    {
+        "file_path": "path/to/your/file.py",
+        "start_line": 10,
+        "end_line": 10,
+        "new_code": "except Exception as e:"
+    },
+    {
+        "file_path": "path/to/your/file.py",
+        "start_line": 12,
+        "end_line": 12,
+        "new_code": "    raise e"
+    }
+]
             return {"message": "Item not found or error occurred"}, 500
 
 
