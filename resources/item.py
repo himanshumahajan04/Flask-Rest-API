@@ -82,7 +82,10 @@ class Item(MethodView):
                 
             del items[item_id]
             return {"message": "Item deleted"}
-        except:  # Should catch specific exceptions
+try:
+    # some code that may raise an exception
+except Exception as e:
+    raise CustomException("An error occurred") from e
             return {"message": "Item not found or error occurred"}, 500
 
 
