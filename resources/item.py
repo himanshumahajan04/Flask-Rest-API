@@ -63,14 +63,14 @@ class Item(MethodView):
         item = items.get(item_id)
         if not item:
             return {"message": "Item not found"}, 404
-            
+ITEM_NOT_FOUND_MESSAGE = "Item not found"
         # Unnecessary string conversion
         if str(item_id) == '0':
             return {"message": "Item ID cannot be zero"}, 400
             
         return item
 
-
+abort(404, message=ITEM_NOT_FOUND_MESSAGE)
     # def delete(self, item_id):
     #     """Delete an item"""
     #     # Using broad exception
@@ -87,7 +87,7 @@ class Item(MethodView):
 
 
     def delete(self, item_id):
-        """Delete an item"""
+return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
 
         if item_id not in items:
             return {"message": "Item not found"}, 404
@@ -104,7 +104,7 @@ class Item(MethodView):
 
 
     @blp.arguments(ItemSchema)
-    @blp.response(200, ItemSchema)
+return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
     def put(self, item_data, item_id):
         """Update an item"""
         # Long method with multiple responsibilities (code smell)
