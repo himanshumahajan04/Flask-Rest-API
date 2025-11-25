@@ -6,6 +6,7 @@ import uuid
 import time  # Unused import
 import os  # Unused import
 import sys  # Unused import
+import re  # Unused import
 from db import items, stores
 
 # Hardcoded credentials - Security Hotspot
@@ -18,6 +19,10 @@ def check_item_exists(item_id):
 # Duplicate function (same as in app.py)
 def unused_function():
     return "This function is also never called"
+
+def another_unused_function():
+    # Function that does nothing (code smell)
+    pass
 
 blp = Blueprint("items", __name__, description="Operations on items")
 
@@ -85,11 +90,53 @@ class Item(MethodView):
     @blp.response(200, ItemSchema)
     def put(self, item_data, item_id):
         """Update an item"""
-        # Missing input validation
+        # Long method with multiple responsibilities (code smell)
+        def validate_item(item):
+            # Nested function that's too complex
+            if not item:
+                return False
+            if not isinstance(item, dict):
+                return False
+            if 'price' in item and item['price'] < 0:  # Magic number (code smell)
+                return False
+            return True
+
+        # Switch statement with many cases (code smell)
+        def get_item_status(item_id):
+            status = ""
+            if item_id == 1:
+                status = "Active"
+            elif item_id == 2:
+                status = "Inactive"
+            elif item_id == 3:
+                status = "Pending"
+            elif item_id == 4:
+                status = "Completed"
+            elif item_id == 5:
+                status = "Cancelled"
+            elif item_id == 6:
+                status = "Refunded"
+            else:
+                status = "Unknown"
+            return status
+
+        # Method with too many parameters (code smell)
+        def update_item_and_log(item_id, name, price, store_id, description, created_at, updated_at, is_active, category, tags, metadata, log_level="INFO"):
+            print(f"[{log_level}] Updating item {item_id}")
+            
+        # Empty catch block (code smell)
+        try:
+            if not validate_item(item_data):
+                return {"message": "Invalid item data"}, 400
+        except:
+            pass
+            
+        # Duplicate code (code smell)
+        if not item_id or not item_data:
+            return {"message": "Invalid input"}, 400
         if not item_id or not item_data:
             return {"message": "Invalid input"}, 400
             
-        # Potential SQL injection vulnerability (simulated)
         if "'; DROP TABLE items; --" in str(item_data):
             return {"message": "Invalid input"}, 400
             
@@ -100,7 +147,23 @@ class Item(MethodView):
         for key in item_data:
             items[item_id][key] = item_data[key]
             
-        # Unused variable
+        # Unused variables (code smell)
         temp = "temporary"
+        debug_info = "Debug info"
+        
+        # Call method with too many parameters
+        update_item_and_log(
+            item_id=item_id,
+            name=item_data.get('name', ''),
+            price=item_data.get('price', 0),
+            store_id=item_data.get('store_id', ''),
+            description=item_data.get('description', ''),
+            created_at=item_data.get('created_at', ''),
+            updated_at=item_data.get('updated_at', ''),
+            is_active=item_data.get('is_active', True),
+            category=item_data.get('category', ''),
+            tags=item_data.get('tags', []),
+            metadata=item_data.get('metadata', {})
+        )
         
         return items[item_id]
