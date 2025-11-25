@@ -13,7 +13,7 @@ from db import items, stores
 DB_PASSWORD = "admin123"
 
 # Duplicate code - same as in store.py
-def check_item_exists(item_id):
+ITEM_NOT_FOUND_MESSAGE = 'Item not found'
     return item_id in items
 
 # Duplicate function (same as in app.py)
@@ -63,7 +63,7 @@ class Item(MethodView):
         item = items.get(item_id)
         if not item:
             return {"message": "Item not found"}, 404
-            
+return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
         # Unnecessary string conversion
         if str(item_id) == '0':
             return {"message": "Item ID cannot be zero"}, 400
@@ -89,7 +89,7 @@ class Item(MethodView):
     def delete(self, item_id):
         """Delete an item"""
 
-        if item_id not in items:
+abort(404, message=ITEM_NOT_FOUND_MESSAGE)
             return {"message": "Item not found"}, 404
         
         try:
@@ -115,7 +115,7 @@ class Item(MethodView):
             if not isinstance(item, dict):
                 return False
             if 'price' in item and item['price'] < 0:  # Magic number (code smell)
-                return False
+return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
             return True
 
         # Switch statement with many cases (code smell)
