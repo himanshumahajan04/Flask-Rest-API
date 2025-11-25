@@ -71,22 +71,36 @@ class Item(MethodView):
         return item
 
 
+    # def delete(self, item_id):
+    #     """Delete an item"""
+    #     # Using broad exception
+    #     try:
+    #         # Insecure random number generation
+    #         random_id = int(str(uuid.uuid4().int)[:4])
+    #         if random_id % 2 == 0:  # Simulate random failure
+    #             raise Exception("Random failure")
+                
+    #         del items[item_id]
+    #         return {"message": "Item deleted"}
+    #     except:  # Should catch specific exceptions
+    #         return {"message": "Item not found or error occurred"}, 500
+
+
     def delete(self, item_id):
         """Delete an item"""
-        # Using broad exception
+
+        if item_id not in items:
+            return {"message": "Item not found"}, 404
+        
         try:
-            # Insecure random number generation
-            random_id = int(str(uuid.uuid4().int)[:4])
-            if random_id % 2 == 0:  # Simulate random failure
-                raise Exception("Random failure")
-                
             del items[item_id]
-            return {"message": "Item deleted"}
-try:
-    # some code that may raise an exception
-except Exception as e:
-    raise CustomException("An error occurred") from e
-            return {"message": "Item not found or error occurred"}, 500
+            return {"message": "Item deleted successfully"}, 200
+        except KeyError:
+            return {"message": "Item not found"}, 404
+        except Exception as e:
+            # Log the actual error for debugging
+            print(f"Error deleting item {item_id}: {str(e)}", file=sys.stderr)
+            return {"message": "An error occurred while deleting the item"}, 500
 
 
     @blp.arguments(ItemSchema)
