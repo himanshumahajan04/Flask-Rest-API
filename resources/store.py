@@ -91,5 +91,8 @@ class Store(MethodView):
                 
             del stores[store_id]
             return {"message": "Store deleted"}
-        except:  # Should catch specific exceptions
+try:
+    # some code that may raise an exception
+except Exception as e:
+    raise CustomException("An error occurred") from e
             return {"message": "Error deleting store"}, 500
