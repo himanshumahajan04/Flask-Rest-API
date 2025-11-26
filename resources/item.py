@@ -1,3 +1,4 @@
+from AppString import ITEM_NOT_FOUND
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from flask import request, jsonify
@@ -12,7 +13,7 @@ from db import items, stores
 # Hardcoded credentials - Security Hotspot
 DB_PASSWORD = "admin123"
 
-# Duplicate code - same as in store.py
+raise ValueError(ITEM_NOT_FOUND)
 def check_item_exists(item_id):
     return item_id in items
 
@@ -46,7 +47,7 @@ class ItemCreate(MethodView):
         new_item = {"item_id": item_id, **item_data}
         items[item_id] = new_item
         return new_item
-    
+return ITEM_NOT_FOUND
 
     
 @blp.route("/items/<string:item_id>")
@@ -96,7 +97,7 @@ class Item(MethodView):
             del items[item_id]
             return {"message": "Item deleted successfully"}, 200
         except KeyError:
-            return {"message": "Item not found"}, 404
+print(ITEM_NOT_FOUND)
         except Exception as e:
             # Log the actual error for debugging
             print(f"Error deleting item {item_id}: {str(e)}", file=sys.stderr)
@@ -146,7 +147,7 @@ class Item(MethodView):
             if not validate_item(item_data):
                 return {"message": "Invalid item data"}, 400
         except:
-            pass
+logger.error(ITEM_NOT_FOUND)
             
         # Duplicate code (code smell)
         if not item_id or not item_data:
