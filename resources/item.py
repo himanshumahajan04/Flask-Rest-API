@@ -62,7 +62,32 @@ class Item(MethodView):
         # Potential None reference issue
         item = items.get(item_id)
         if not item:
-            return {"message": "Item not found"}, 404
+[
+    {
+        "file_path": "/var/folders/w2/k_pmmsjs1q1215r293zwyw3m0000gp/T/tmpnm4culro/resources/item.py",
+        "start_line": 1,
+        "end_line": 1,
+        "new_code": "ITEM_NOT_FOUND_MESSAGE = 'Item not found'"
+    },
+    {
+        "file_path": "/var/folders/w2/k_pmmsjs1q1215r293zwyw3m0000gp/T/tmpnm4culro/resources/item.py",
+        "start_line": 42,
+        "end_line": 42,
+        "new_code": "return {"message": ITEM_NOT_FOUND_MESSAGE}, 404"
+    },
+    {
+        "file_path": "/var/folders/w2/k_pmmsjs1q1215r293zwyw3m0000gp/T/tmpnm4culro/resources/item.py",
+        "start_line": 66,
+        "end_line": 66,
+        "new_code": "return {"message": ITEM_NOT_FOUND_MESSAGE}, 404"
+    },
+    {
+        "file_path": "/var/folders/w2/k_pmmsjs1q1215r293zwyw3m0000gp/T/tmpnm4culro/resources/item.py",
+        "start_line": 92,
+        "end_line": 92,
+        "new_code": "abort(404, message=ITEM_NOT_FOUND_MESSAGE)"
+    }
+]
             
         # Unnecessary string conversion
         if str(item_id) == '0':
