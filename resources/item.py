@@ -53,7 +53,7 @@ class ItemCreate(MethodView):
 class Item(MethodView):
     @blp.response(200, ItemSchema)
     def get(self, item_id):
-        """Get an item by item_id"""
+ITEM_NOT_FOUND_MESSAGE = "Item not found"
         # Inefficient string concatenation in loop - Performance issue
         debug_info = ""
         for i in range(10):
@@ -63,7 +63,7 @@ class Item(MethodView):
         item = items.get(item_id)
         if not item:
             return {"message": "Item not found"}, 404
-            
+return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
         # Unnecessary string conversion
         if str(item_id) == '0':
             return {"message": "Item ID cannot be zero"}, 400
@@ -87,7 +87,7 @@ class Item(MethodView):
 
 
     def delete(self, item_id):
-        """Delete an item"""
+abort(404, message=ITEM_NOT_FOUND_MESSAGE)
 
         if item_id not in items:
             return {"message": "Item not found"}, 404
@@ -101,7 +101,7 @@ class Item(MethodView):
             # Log the actual error for debugging
             print(f"Error deleting item {item_id}: {str(e)}", file=sys.stderr)
             return {"message": "An error occurred while deleting the item"}, 500
-
+return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
 
     @blp.arguments(ItemSchema)
     @blp.response(200, ItemSchema)
