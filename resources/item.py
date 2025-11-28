@@ -62,7 +62,25 @@ class Item(MethodView):
         # Potential None reference issue
         item = items.get(item_id)
         if not item:
-            return {"message": "Item not found"}, 404
+# Define a constant at the top of your file
+ITEM_NOT_FOUND_MESSAGE = "Item not found"
+
+# Use the constant instead of the literal
+def some_function():
+    # Some code here
+    return jsonify({"error": ITEM_NOT_FOUND_MESSAGE}), 404
+
+def another_function():
+    # Some other code here
+    return jsonify({"error": ITEM_NOT_FOUND_MESSAGE}), 404
+
+def yet_another_function():
+    # More code here
+    return jsonify({"error": ITEM_NOT_FOUND_MESSAGE}), 404
+
+def final_function():
+    # Final code here
+    return jsonify({"error": ITEM_NOT_FOUND_MESSAGE}), 404
             
         # Unnecessary string conversion
         if str(item_id) == '0':
