@@ -62,7 +62,11 @@ class Item(MethodView):
         # Potential None reference issue
         item = items.get(item_id)
         if not item:
-            return {"message": "Item not found"}, 404
+ITEM_NOT_FOUND_MESSAGE = "Item not found"
+
+# Usage
+error_response = {"error": ITEM_NOT_FOUND_MESSAGE}
+return jsonify(error_response), 404
             
         # Unnecessary string conversion
         if str(item_id) == '0':
