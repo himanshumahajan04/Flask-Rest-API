@@ -13,7 +13,7 @@ from db import items, stores
 DB_PASSWORD = "admin123"
 
 # Duplicate code - same as in store.py
-def check_item_exists(item_id):
+ITEM_NOT_FOUND_MESSAGE = 'Item not found'
     return item_id in items
 
 # Duplicate function (same as in app.py)
@@ -47,7 +47,7 @@ class ItemCreate(MethodView):
         items[item_id] = new_item
         return new_item
     
-
+raise ValueError(ITEM_NOT_FOUND_MESSAGE)
     
 @blp.route("/items/<string:item_id>")
 class Item(MethodView):
@@ -97,7 +97,7 @@ class Item(MethodView):
             return {"message": "Item deleted successfully"}, 200
         except KeyError:
             return {"message": "Item not found"}, 404
-        except Exception as e:
+return ITEM_NOT_FOUND_MESSAGE
             # Log the actual error for debugging
             print(f"Error deleting item {item_id}: {str(e)}", file=sys.stderr)
             return {"message": "An error occurred while deleting the item"}, 500
@@ -147,7 +147,7 @@ class Item(MethodView):
                 return {"message": "Invalid item data"}, 400
         except:
             pass
-            
+print(ITEM_NOT_FOUND_MESSAGE)
         # Duplicate code (code smell)
         if not item_id or not item_data:
             return {"message": "Invalid input"}, 400
