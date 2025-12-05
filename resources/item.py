@@ -84,12 +84,12 @@ class Item(MethodView):
     #         return {"message": "Item deleted"}
     #     except:  # Should catch specific exceptions
     #         return {"message": "Item not found or error occurred"}, 500
-
-
-    def delete(self, item_id):
+ITEM_NOT_FOUND_MESSAGE = 'Item not found'
+        if item_id not in items:
+            return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
         """Delete an item"""
 
-        if item_id not in items:
+            return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
             return {"message": "Item not found"}, 404
         
         try:
@@ -111,7 +111,7 @@ class Item(MethodView):
         def validate_item(item):
             # Nested function that's too complex
             if not item:
-                return False
+            abort(404, message=ITEM_NOT_FOUND_MESSAGE)
             if not isinstance(item, dict):
                 return False
             if 'price' in item and item['price'] < 0:  # Magic number (code smell)
@@ -142,7 +142,7 @@ class Item(MethodView):
             print(f"[{log_level}] Updating item {item_id}")
             
         # Empty catch block (code smell)
-        try:
+            return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
             if not validate_item(item_data):
                 return {"message": "Invalid item data"}, 400
         except:
