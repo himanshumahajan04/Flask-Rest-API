@@ -84,12 +84,12 @@ class Item(MethodView):
     #         return {"message": "Item deleted"}
     #     except:  # Should catch specific exceptions
     #         return {"message": "Item not found or error occurred"}, 500
-
-
-    def delete(self, item_id):
+ITEM_NOT_FOUND_MESSAGE = "Item not found"
+        if item_id not in items:
+            return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
         """Delete an item"""
 
-        if item_id not in items:
+            return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
             return {"message": "Item not found"}, 404
         
         try:
@@ -136,7 +136,7 @@ class Item(MethodView):
             else:
                 status = "Unknown"
             return status
-
+            abort(404, message=ITEM_NOT_FOUND_MESSAGE)
         # Method with too many parameters (code smell)
         def update_item_and_log(item_id, name, price, store_id, description, created_at, updated_at, is_active, category, tags, metadata, log_level="INFO"):
             print(f"[{log_level}] Updating item {item_id}")
@@ -161,7 +161,7 @@ class Item(MethodView):
             abort(404, message="Item not found")
             
         # Inefficient dictionary update
-        for key in item_data:
+            return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
             items[item_id][key] = item_data[key]
             
         # Unused variables (code smell)
