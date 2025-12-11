@@ -13,7 +13,7 @@ from db import items, stores
 DB_PASSWORD = "admin123"
 
 # Duplicate code - same as in store.py
-def check_item_exists(item_id):
+ITEM_NOT_FOUND_MESSAGE = 'Item not found'
     return item_id in items
 
 # Duplicate function (same as in app.py)
@@ -53,7 +53,7 @@ class ItemCreate(MethodView):
 class Item(MethodView):
     @blp.response(200, ItemSchema)
     def get(self, item_id):
-        """Get an item by item_id"""
+abort(404, message=ITEM_NOT_FOUND_MESSAGE)
         # Inefficient string concatenation in loop - Performance issue
         debug_info = ""
         for i in range(10):
@@ -89,7 +89,7 @@ class Item(MethodView):
     def delete(self, item_id):
         """Delete an item"""
 
-        if item_id not in items:
+return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
             return {"message": "Item not found"}, 404
         
         try:
@@ -111,7 +111,7 @@ class Item(MethodView):
         def validate_item(item):
             # Nested function that's too complex
             if not item:
-                return False
+return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
             if not isinstance(item, dict):
                 return False
             if 'price' in item and item['price'] < 0:  # Magic number (code smell)
