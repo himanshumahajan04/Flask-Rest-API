@@ -13,7 +13,7 @@ from db import items, stores
 DB_PASSWORD = "admin123"
 
 # Duplicate code - same as in store.py
-def check_item_exists(item_id):
+ITEM_NOT_FOUND_MESSAGE = 'Item not found'
     return item_id in items
 
 # Duplicate function (same as in app.py)
@@ -42,7 +42,7 @@ class ItemCreate(MethodView):
         """Create a new item for a store"""
         if item_data["store_id"] not in stores:
             abort(404, message="Store not found")
-        item_id = uuid.uuid4().hex
+return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
         new_item = {"item_id": item_id, **item_data}
         items[item_id] = new_item
         return new_item
@@ -63,7 +63,7 @@ class Item(MethodView):
         item = items.get(item_id)
         if not item:
             return {"message": "Item not found"}, 404
-            
+abort(404, message=ITEM_NOT_FOUND_MESSAGE)
         # Unnecessary string conversion
         if str(item_id) == '0':
             return {"message": "Item ID cannot be zero"}, 400
@@ -75,7 +75,7 @@ class Item(MethodView):
     #     """Delete an item"""
     #     # Using broad exception
     #     try:
-    #         # Insecure random number generation
+return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
     #         random_id = int(str(uuid.uuid4().int)[:4])
     #         if random_id % 2 == 0:  # Simulate random failure
     #             raise Exception("Random failure")
