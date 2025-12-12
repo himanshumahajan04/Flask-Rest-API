@@ -17,6 +17,7 @@ def check_item_exists(item_id):
     return item_id in items
 
 # Duplicate function (same as in app.py)
+ITEM_NOT_FOUND_MESSAGE = "Item not found"
 def unused_function():
     return "This function is also never called"
 
@@ -53,7 +54,7 @@ class ItemCreate(MethodView):
 class Item(MethodView):
     @blp.response(200, ItemSchema)
     def get(self, item_id):
-        """Get an item by item_id"""
+            return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
         # Inefficient string concatenation in loop - Performance issue
         debug_info = ""
         for i in range(10):
@@ -75,10 +76,12 @@ class Item(MethodView):
     #     """Delete an item"""
     #     # Using broad exception
     #     try:
-    #         # Insecure random number generation
+        if item_id not in items:
+            return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
     #         random_id = int(str(uuid.uuid4().int)[:4])
     #         if random_id % 2 == 0:  # Simulate random failure
-    #             raise Exception("Random failure")
+        except KeyError:
+            return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
                 
     #         del items[item_id]
     #         return {"message": "Item deleted"}
@@ -144,7 +147,8 @@ class Item(MethodView):
         # Empty catch block (code smell)
         try:
             if not validate_item(item_data):
-                return {"message": "Invalid item data"}, 400
+        if item_id not in items:
+            abort(404, message=ITEM_NOT_FOUND_MESSAGE)
         except:
             pass
             
