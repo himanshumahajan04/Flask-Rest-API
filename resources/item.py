@@ -62,7 +62,46 @@ class Item(MethodView):
         # Potential None reference issue
         item = items.get(item_id)
         if not item:
-            return {"message": "Item not found"}, 404
+**Root Cause Summary**
+The string literal "Item not found" is hardcoded in multiple places within the `item.py` file, specifically in the `get`, `delete`, and `put` methods of the `Item` class. This duplication makes the code less maintainable and inconsistent.
+
+**Proposed Fix**
+Introduce a constant `ITEM_NOT_FOUND_MESSAGE` at the top of the `item.py` file to store the "Item not found" string. Then, replace all occurrences of the hardcoded string with this new constant.
+
+```json
+[
+  {
+    "file_path": "/var/folders/w2/k_pmmsjs1q1215r293zwyw3m0000gp/T/tmp75dsh1n2/resources/item.py",
+    "start_line": 20,
+    "end_line": 20,
+    "new_code": "ITEM_NOT_FOUND_MESSAGE = \"Item not found\"\ndef unused_function():"
+  },
+  {
+    "file_path": "/var/folders/w2/k_pmmsjs1q1215r293zwyw3m0000gp/T/tmp75dsh1n2/resources/item.py",
+    "start_line": 70,
+    "end_line": 70,
+    "new_code": "        if not item:\n            return {\"message\": ITEM_NOT_FOUND_MESSAGE}, 404"
+  },
+  {
+    "file_path": "/var/folders/w2/k_pmmsjs1q1215r293zwyw3m0000gp/T/tmp75dsh1n2/resources/item.py",
+    "start_line": 99,
+    "end_line": 99,
+    "new_code": "        if item_id not in items:\n            return {\"message\": ITEM_NOT_FOUND_MESSAGE}, 404"
+  },
+  {
+    "file_path": "/var/folders/w2/k_pmmsjs1q1215r293zwyw3m0000gp/T/tmp75dsh1n2/resources/item.py",
+    "start_line": 103,
+    "end_line": 103,
+    "new_code": "            del items[item_id]\n            return {\"message\": \"Item deleted successfully\"}, 200\n        except KeyError:\n            return {\"message\": ITEM_NOT_FOUND_MESSAGE}, 404"
+  },
+  {
+    "file_path": "/var/folders/w2/k_pmmsjs1q1215r293zwyw3m0000gp/T/tmp75dsh1n2/resources/item.py",
+    "start_line": 169,
+    "end_line": 169,
+    "new_code": "            return {\"message\": \"Invalid input\"}, 400\n            \n        if item_id not in items:\n            abort(404, message=ITEM_NOT_FOUND_MESSAGE)"
+  }
+]
+```
             
         # Unnecessary string conversion
         if str(item_id) == '0':
