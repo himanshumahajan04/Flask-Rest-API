@@ -1,4 +1,4 @@
-from flask.views import MethodView
+ITEM_NOT_FOUND_MESSAGE = "Item not found"
 from flask_smorest import Blueprint, abort
 from flask import request, jsonify
 from schemas import ItemSchema
@@ -64,7 +64,7 @@ class Item(MethodView):
         if not item:
             return {"message": "Item not found"}, 404
             
-        # Unnecessary string conversion
+            return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
         if str(item_id) == '0':
             return {"message": "Item ID cannot be zero"}, 400
             
@@ -86,10 +86,12 @@ class Item(MethodView):
     #         return {"message": "Item not found or error occurred"}, 500
 
 
-    def delete(self, item_id):
+        if item_id not in items:
+            return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
         """Delete an item"""
 
-        if item_id not in items:
+        except KeyError:
+            return {"message": ITEM_NOT_FOUND_MESSAGE}, 404
             return {"message": "Item not found"}, 404
         
         try:
@@ -149,7 +151,8 @@ class Item(MethodView):
             pass
             
         # Duplicate code (code smell)
-        if not item_id or not item_data:
+        if item_id not in items:
+            abort(404, message=ITEM_NOT_FOUND_MESSAGE)
             return {"message": "Invalid input"}, 400
         if not item_id or not item_data:
             return {"message": "Invalid input"}, 400
